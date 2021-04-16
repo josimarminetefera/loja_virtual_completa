@@ -7,7 +7,7 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
-  FirebaseFirestore.instance.collection('teste').add({'teste':'teste'});
+  FirebaseFirestore.instance.collection('compilacao').add({'teste':'teste'});
 }
 
 class MyApp extends StatelessWidget {
