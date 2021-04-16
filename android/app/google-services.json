@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "946777608223",
+    "project_id": "loja-virtual-completa-ba8bd",
+    "storage_bucket": "loja-virtual-completa-ba8bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:946777608223:android:9abfa5baaac5d97cce852a",
+        "android_client_info": {
+          "package_name": "br.com.josimar.loja_virtual_completa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "946777608223-m8ba41bs7ucvkfuig954rnus91ou2t4g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZahfr70cLekKdPsUF4McCPZp3ZIJeVLE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "946777608223-m8ba41bs7ucvkfuig954rnus91ou2t4g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
