@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:loja_virtual_completa/models/page_manager.dart';
+import 'package:provider/provider.dart';
 
 class CustomDrawerItem extends StatelessWidget {
-  const CustomDrawerItem({@required this.iconData, @required this.titulo, @required this.pagina});
+  const CustomDrawerItem({@required this.iconData, @required this.titulo, @required this.paginaParaAbrir});
 
   final IconData iconData;
   final String titulo;
-  final int pagina;
+  final int paginaParaAbrir;
 
   @override
   Widget build(BuildContext context) {
+    final int paginaAtual = context.watch<PageManager>().paginaAtual;
+
     return InkWell(
       onTap: () {
-        debugPrint("Cliquei na página $pagina");
+        context.read<PageManager>().trocarDePagina(paginaParaAbrir);
+        debugPrint("Cliquei na página $paginaParaAbrir");
       },
       child: SizedBox(
         height: 60,
@@ -22,14 +27,14 @@ class CustomDrawerItem extends StatelessWidget {
               child: Icon(
                 iconData,
                 size: 32,
-                color: Colors.grey[700],
+                color: (paginaAtual == paginaParaAbrir) ? Colors.red : Colors.grey[700],
               ),
             ),
             Text(
               titulo,
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.grey[700],
+                color: (paginaAtual == paginaParaAbrir) ? Colors.red : Colors.grey[700],
               ),
             ),
           ],
