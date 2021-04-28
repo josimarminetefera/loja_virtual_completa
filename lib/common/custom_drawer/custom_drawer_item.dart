@@ -27,14 +27,14 @@ class CustomDrawerItem extends StatelessWidget {
               child: Icon(
                 iconData,
                 size: 32,
-                color: (paginaAtual == paginaParaAbrir) ? Colors.red : Colors.grey[700],
+                color: (paginaAtual == paginaParaAbrir) ? Theme.of(context).primaryColor : Colors.grey[700],
               ),
             ),
             Text(
               titulo,
               style: TextStyle(
                 fontSize: 16,
-                color: (paginaAtual == paginaParaAbrir) ? Colors.red : Colors.grey[700],
+                color: (paginaAtual == paginaParaAbrir) ? Theme.of(context).primaryColor : Colors.grey[700],
               ),
             ),
           ],

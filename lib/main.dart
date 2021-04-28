@@ -35,7 +35,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Loja Josimar',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Color.fromARGB(255, 4, 125, 141),
+        scaffoldBackgroundColor: Color.fromARGB(255, 4, 125, 141),
+        appBarTheme: const AppBarTheme(
+          elevation: 0,
+        ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: BaseScreen(),
