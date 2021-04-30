@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual_completa/helpres/validadores.dart';
+import 'package:loja_virtual_completa/models/usuario_manager.dart';
+import 'package:loja_virtual_completa/models/usuario.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -76,7 +79,12 @@ class LoginScreen extends StatelessWidget {
                     ),
                     onPressed: () {
                       if (formKey.currentState.validate()) {
-                        print(emailController.text);
+                        context.read<UsuarioManager>().entrar(
+                              Usuario(
+                                email: emailController.text,
+                                senha: senhaController.text,
+                              ),
+                            );
                       }
                     },
                   ),

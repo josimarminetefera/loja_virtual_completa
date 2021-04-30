@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual_completa/common/custom_drawer/custom_drawer.dart';
-import 'package:loja_virtual_completa/models/page_manager.dart';
+import 'package:loja_virtual_completa/models/pagina_manager.dart';
 import 'package:loja_virtual_completa/screens/login/login_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +10,7 @@ class BaseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provider(
-      create: (_) => PageManager(pageController),
+      create: (_) => PaginaManager(pageController),
       child: PageView(
         //physics: const NeverScrollableScrollPhysics(),
         controller: pageController,

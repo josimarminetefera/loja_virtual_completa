@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:loja_virtual_completa/models/page_manager.dart';
+import 'package:loja_virtual_completa/models/pagina_manager.dart';
 import 'package:provider/provider.dart';
 
 class CustomDrawerItem extends StatelessWidget {
@@ -11,11 +11,11 @@ class CustomDrawerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int paginaAtual = context.watch<PageManager>().paginaAtual;
+    final int paginaAtual = context.watch<PaginaManager>().paginaAtual;
 
     return InkWell(
       onTap: () {
-        context.read<PageManager>().trocarDePagina(paginaParaAbrir);
+        context.read<PaginaManager>().trocarDePagina(paginaParaAbrir);
         debugPrint("Cliquei na página $paginaParaAbrir");
       },
       child: SizedBox(
