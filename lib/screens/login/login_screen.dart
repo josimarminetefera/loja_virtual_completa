@@ -6,12 +6,14 @@ import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController senhaController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: Text("Entrar"),
         centerTitle: true,
@@ -80,10 +82,24 @@ class LoginScreen extends StatelessWidget {
                     onPressed: () {
                       if (formKey.currentState.validate()) {
                         context.read<UsuarioManager>().entrar(
-                              Usuario(
+                              usuario: Usuario(
                                 email: emailController.text,
                                 senha: senhaController.text,
                               ),
+                              onFail: (erro) {
+                                /*scaffoldKey.currentState.showSnackBar(
+                                  SnackBar(content: Text("Erro ao entrar: $erro"),backgroundColor: Colors.redAccent),
+                                );*/
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(erro),
+                                    backgroundColor: Colors.redAccent,
+                                  ),
+                                );
+                              }, //nome disso é calback
+                              onSucces: () {
+                                //TODO: FECHAR TELA DE LOGIN
+                              },
                             );
                       }
                     },
