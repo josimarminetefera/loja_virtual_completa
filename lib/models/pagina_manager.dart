@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 class PaginaManager {
   PaginaManager(this._pageController);
 
-  PageController _pageController;
+  final PageController _pageController;
 
   int paginaAtual = 0;
 

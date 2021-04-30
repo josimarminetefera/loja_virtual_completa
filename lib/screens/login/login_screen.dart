@@ -49,7 +49,9 @@ class LoginScreen extends StatelessWidget {
                         hintText: "E-mail",
                       ),
                       autocorrect: false,
-                      enabled: !context.read<UsuarioManager>().carregando,
+                      enabled: !context
+                          .read<UsuarioManager>()
+                          .carregando,
                       validator: (valor) {
                         if (!emailValido(valor)) {
                           return "Email inválido";
@@ -91,11 +93,13 @@ class LoginScreen extends StatelessWidget {
       child: ElevatedButton(
         child: usuarioManager.carregando
             ? CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation(Colors.white),
-              )
+          valueColor: AlwaysStoppedAnimation(Colors.white),
+        )
             : Text("Entrar"),
         style: ElevatedButton.styleFrom(
-          primary: Theme.of(context).primaryColor,
+          primary: Theme
+              .of(context)
+              .primaryColor,
           textStyle: TextStyle(
             fontSize: 18,
           ),
@@ -103,27 +107,27 @@ class LoginScreen extends StatelessWidget {
         onPressed: usuarioManager.carregando
             ? null
             : () {
-                if (formKey.currentState.validate()) {
-                  context.read<UsuarioManager>().entrar(
-                        //sem o Consumer context.read<UsuarioManager>() e com Consumer usuarioManager
-                        usuario: Usuario(
-                          email: emailController.text,
-                          senha: senhaController.text,
-                        ),
-                        onFail: (erro) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(erro),
-                              backgroundColor: Colors.redAccent,
-                            ),
-                          );
-                        }, //nome disso é calback
-                        onSucces: () {
-                          //TODO: FECHAR TELA DE LOGIN
-                        },
-                      );
-                }
+          if (formKey.currentState.validate()) {
+            context.read<UsuarioManager>().entrar(
+              //sem o Consumer context.read<UsuarioManager>() e com Consumer usuarioManager
+              usuario: Usuario(
+                email: emailController.text,
+                senha: senhaController.text,
+              ),
+              onFail: (erro) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(erro),
+                    backgroundColor: Colors.redAccent,
+                  ),
+                );
+              }, //nome disso é calback
+              onSucces: () {
+                //TODO: FECHAR TELA DE LOGIN
               },
+            );
+          }
+        },
       ),
     );
   }
