@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:loja_virtual_completa/models/usuario_manager.dart';
 import 'package:loja_virtual_completa/screens/base/base_screen.dart';
+import 'package:loja_virtual_completa/screens/criar_conta/criar_conta_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -46,7 +47,15 @@ class MyApp extends StatelessWidget {
           ),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: BaseScreen(),
+        initialRoute: '/base',
+        onGenerateRoute: (settings) {
+          switch (settings.name) {
+            case "/criar_conta":
+              return MaterialPageRoute(builder: (_) => CriarContaScreen());
+            default:
+              return MaterialPageRoute(builder: (_) => BaseScreen());
+          }
+        },
       ),
     );
   }
