@@ -17,6 +17,18 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Entrar"),
         centerTitle: true,
+        actions: [
+          TextButton(
+            child: const Text(
+              "Criar Conta",
+              style: TextStyle(fontSize: 14),
+            ),
+            onPressed: () {
+              //PARA SUBSTITUIR UMA TELA PELA OUTRA pushReplacementNamed
+              Navigator.of(context).pushReplacementNamed("/criar_conta");
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Card(
@@ -42,41 +54,9 @@ class LoginScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   shrinkWrap: true, //menos altura da tela
                   children: [
-                    TextFormField(
-                      controller: emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
-                        hintText: "E-mail",
-                      ),
-                      autocorrect: false,
-                      enabled: !context
-                          .read<UsuarioManager>()
-                          .carregando,
-                      validator: (valor) {
-                        if (!emailValido(valor)) {
-                          return "Email inválido";
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    TextFormField(
-                      controller: senhaController,
-                      decoration: const InputDecoration(
-                        hintText: "Senha",
-                      ),
-                      autocorrect: false,
-                      obscureText: true,
-                      enabled: !usuarioManager.carregando,
-                      validator: (valor) {
-                        if (valor.isEmpty || valor.length < 6) {
-                          return "Senha inválida";
-                        }
-                        return null;
-                      },
-                    ),
-                    childQueNaoRebilda,
-                    construirBotaoEntrar(context, usuarioManager)
+                    construirCampoEmailSenha(context, usuarioManager),
+                    childQueNaoRebilda, //inserido aqui só para mostrar de exemplo  de uso de parte que não atualiza
+                    construirBotaoEntrar(context, usuarioManager),
                   ],
                 );
               },
@@ -87,48 +67,88 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
+  Column construirCampoEmailSenha(BuildContext context, UsuarioManager usuarioManager) {
+    return Column(
+      children: [
+        TextFormField(
+          controller: emailController,
+          keyboardType: TextInputType.emailAddress,
+          decoration: const InputDecoration(
+            hintText: "E-mail",
+          ),
+          autocorrect: false,
+          enabled: !context.read<UsuarioManager>().carregando,
+          validator: (valor) {
+            if (!emailValido(valor)) {
+              return "Email inválido";
+            }
+            return null;
+          },
+        ),
+        const SizedBox(height: 10),
+        TextFormField(
+          controller: senhaController,
+          decoration: const InputDecoration(
+            hintText: "Senha",
+          ),
+          autocorrect: false,
+          obscureText: true,
+          enabled: !usuarioManager.carregando,
+          validator: (valor) {
+            if (valor.isEmpty || valor.length < 6) {
+              return "Senha inválida";
+            }
+            return null;
+          },
+        ),
+      ],
+    );
+  }
+
   SizedBox construirBotaoEntrar(BuildContext context, UsuarioManager usuarioManager) {
     return SizedBox(
       height: 50,
       child: ElevatedButton(
-        child: usuarioManager.carregando
-            ? CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation(Colors.white),
-        )
-            : Text("Entrar"),
         style: ElevatedButton.styleFrom(
-          primary: Theme
-              .of(context)
-              .primaryColor,
+          primary: Theme.of(context).primaryColor,
           textStyle: TextStyle(
             fontSize: 18,
           ),
         ),
+        child: usuarioManager.carregando
+            ? CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation(Colors.white),
+              )
+            : Text("Entrar"),
         onPressed: usuarioManager.carregando
             ? null
             : () {
-          if (formKey.currentState.validate()) {
-            context.read<UsuarioManager>().entrar(
-              //sem o Consumer context.read<UsuarioManager>() e com Consumer usuarioManager
-              usuario: Usuario(
-                email: emailController.text,
-                senha: senhaController.text,
-              ),
-              onFail: (erro) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(erro),
-                    backgroundColor: Colors.redAccent,
-                  ),
-                );
-              }, //nome disso é calback
-              onSucces: () {
-                //TODO: FECHAR TELA DE LOGIN
+                acaoBotaoEntrar(context);
               },
-            );
-          }
-        },
       ),
     );
+  }
+
+  void acaoBotaoEntrar(BuildContext context) {
+    if (formKey.currentState.validate()) {
+      context.read<UsuarioManager>().entrar(
+            //sem o Consumer context.read<UsuarioManager>() e com Consumer usuarioManager
+            usuario: Usuario(
+              email: emailController.text,
+              senha: senhaController.text,
+            ),
+            onSucces: () {
+              //TODO: FECHAR TELA DE LOGIN
+            },
+            onFail: (erro) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(erro),
+                  backgroundColor: Colors.redAccent,
+                ),
+              );
+            }, //nome disso é calback
+          );
+    }
   }
 }
