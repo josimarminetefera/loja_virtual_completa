@@ -21,14 +21,19 @@ class CriarContaScreen extends StatelessWidget {
               const SizedBox(height: 10),
               TextFormField(
                 decoration: InputDecoration(hintText: "E-mail"),
+                keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 10),
               TextFormField(
                 decoration: InputDecoration(hintText: "Senha"),
+                autocorrect: false,
+                obscureText: true,
               ),
               const SizedBox(height: 10),
               TextFormField(
                 decoration: InputDecoration(hintText: "Repita a Senha"),
+                autocorrect: false,
+                obscureText: true,
               ),
               const SizedBox(height: 10),
               SizedBox(
@@ -37,10 +42,10 @@ class CriarContaScreen extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     primary: Theme.of(context).primaryColor,
                     textStyle: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                     ),
                   ),
-                  child: Text("Entrar"),
+                  child: Text("Criar Conta"),
                   onPressed: () {},
                 ),
               )

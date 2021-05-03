@@ -72,10 +72,10 @@ class LoginScreen extends StatelessWidget {
       children: [
         TextFormField(
           controller: emailController,
-          keyboardType: TextInputType.emailAddress,
           decoration: const InputDecoration(
             hintText: "E-mail",
           ),
+          keyboardType: TextInputType.emailAddress,
           autocorrect: false,
           enabled: !context.read<UsuarioManager>().carregando,
           validator: (valor) {
@@ -112,7 +112,7 @@ class LoginScreen extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           primary: Theme.of(context).primaryColor,
           textStyle: TextStyle(
-            fontSize: 18,
+            fontSize: 16,
           ),
         ),
         child: usuarioManager.carregando
