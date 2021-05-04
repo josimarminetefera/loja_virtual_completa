@@ -1,6 +1,8 @@
 class Usuario {
+  String nome;
   String email;
   String senha;
+  String senhaConfirmar;
 
-  Usuario({this.email, this.senha});
+  Usuario({this.nome, this.email, this.senha, this.senhaConfirmar});
 }
