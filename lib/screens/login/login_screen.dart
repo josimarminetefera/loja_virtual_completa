@@ -21,7 +21,10 @@ class LoginScreen extends StatelessWidget {
           TextButton(
             child: const Text(
               "Criar Conta",
-              style: TextStyle(fontSize: 14),
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.white,
+              ),
             ),
             onPressed: () {
               //PARA SUBSTITUIR UMA TELA PELA OUTRA pushReplacementNamed
@@ -36,19 +39,7 @@ class LoginScreen extends StatelessWidget {
           child: Form(
             key: formKey,
             child: Consumer<UsuarioManager>(
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  padding: EdgeInsets.zero,
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                    ),
-                    child: const Text("Esqueci minha senha"),
-                    onPressed: () {},
-                  ),
-                ),
-              ),
+              child: contruirEsqueciMinhaSenha(context), //isso aqui é chamado pelo childQueNaoRebilda
               builder: (_, usuarioManager, childQueNaoRebilda) {
                 return ListView(
                   padding: const EdgeInsets.all(16),
@@ -67,7 +58,7 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Column construirCampoEmailSenha(BuildContext context, UsuarioManager usuarioManager) {
+  Widget construirCampoEmailSenha(BuildContext context, UsuarioManager usuarioManager) {
     return Column(
       children: [
         TextFormField(
@@ -79,8 +70,10 @@ class LoginScreen extends StatelessWidget {
           autocorrect: false,
           enabled: !context.read<UsuarioManager>().carregando,
           validator: (valor) {
-            if (!emailValido(valor)) {
-              return "Email inválido";
+            if (valor.isEmpty) {
+              return "Campo obrigatório";
+            } else if (!validarEmail(valor)) {
+              return "E-mail inválido";
             }
             return null;
           },
@@ -95,8 +88,10 @@ class LoginScreen extends StatelessWidget {
           obscureText: true,
           enabled: !usuarioManager.carregando,
           validator: (valor) {
-            if (valor.isEmpty || valor.length < 6) {
-              return "Senha inválida";
+            if (valor.isEmpty) {
+              return "Campo obrigatório";
+            } else if (!validarSenha(valor)) {
+              return "Senha muito curta";
             }
             return null;
           },
@@ -105,7 +100,26 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  SizedBox construirBotaoEntrar(BuildContext context, UsuarioManager usuarioManager) {
+  Widget contruirEsqueciMinhaSenha(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Container(
+        padding: EdgeInsets.zero,
+        child: TextButton(
+          style: TextButton.styleFrom(
+            padding: EdgeInsets.zero,
+          ),
+          child: const Text(
+            "Esqueci minha senha",
+            style: TextStyle(color: Color.fromARGB(255, 4, 125, 141)),
+          ),
+          onPressed: () {},
+        ),
+      ),
+    );
+  }
+
+  Widget construirBotaoEntrar(BuildContext context, UsuarioManager usuarioManager) {
     return SizedBox(
       height: 50,
       child: ElevatedButton(
