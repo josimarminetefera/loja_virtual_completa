@@ -4,9 +4,9 @@ bool validarEmail(String valor) {
 }
 
 bool validarNomeCompleto(String valor) {
-  return (valor.trim().split(" ").length <= 1);
+  return (valor.trim().split(" ").length > 1);
 }
 
 bool validarSenha(String valor) {
-  return (valor.length < 6);
+  return (valor.length >= 6);
 }

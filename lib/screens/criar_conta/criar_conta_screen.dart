@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual_completa/helpres/validadores.dart';
 import 'package:loja_virtual_completa/models/usuario.dart';
+import 'package:loja_virtual_completa/models/usuario_manager.dart';
+import 'package:provider/provider.dart';
 
 class CriarContaScreen extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -114,7 +116,24 @@ class CriarContaScreen extends StatelessWidget {
             backgroundColor: Colors.redAccent,
           ),
         );
+        return;
       }
+
+      context.read<UsuarioManager>().criarConta(
+            usuario: usuario,
+            onSucces: () {
+              //TODO POP
+              debugPrint("Suceso");
+            },
+            onFail: (erro) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(erro),
+                  backgroundColor: Colors.redAccent,
+                ),
+              );
+            },
+          );
     }
   }
 }

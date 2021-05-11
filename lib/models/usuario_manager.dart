@@ -36,6 +36,18 @@ class UsuarioManager extends ChangeNotifier {
     carregando = false;
   }
 
+  Future<void> criarConta({Usuario usuario, Function onFail, Function onSucces}) async {
+    try {
+      carregando = true;
+      UserCredential resposta = await _firebaseAuth.createUserWithEmailAndPassword(email: usuario.email, password: usuario.senha);
+      this.usuario = resposta.user;
+      onSucces();
+    } catch (erro) {
+      onFail(getErrorString(erro.code));
+    }
+    carregando = false;
+  }
+
   void atualizarTodosObservadores() {
     notifyListeners();
   }
