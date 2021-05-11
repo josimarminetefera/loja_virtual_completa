@@ -4,6 +4,7 @@ import 'package:loja_virtual_completa/models/usuario.dart';
 
 class CriarContaScreen extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   //FORMA DE NÃO USAR CONTROLLER PARA CADA UM DOS CAMPOS
   Usuario usuario = new Usuario();
@@ -11,6 +12,7 @@ class CriarContaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: const Text("Criar Conta"),
         centerTitle: true,
@@ -91,7 +93,7 @@ class CriarContaScreen extends StatelessWidget {
                       ),
                     ),
                     child: Text("Criar Conta"),
-                    onPressed: acaoBotaoCriarConta,
+                    onPressed: () => acaoBotaoCriarConta(context),
                   ),
                 )
               ],
@@ -102,11 +104,17 @@ class CriarContaScreen extends StatelessWidget {
     );
   }
 
-  void acaoBotaoCriarConta() {
+  void acaoBotaoCriarConta(BuildContext context) {
     if (formKey.currentState.validate()) {
       formKey.currentState.save(); //isso chama o onSaved de todos campos
-
-      
+      if (usuario.senha != usuario.senhaConfirmar) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("As senhas informadas estão diferentes!"),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      }
     }
   }
 }
