@@ -40,7 +40,11 @@ class UsuarioManager extends ChangeNotifier {
     try {
       carregando = true;
       UserCredential resposta = await _firebaseAuth.createUserWithEmailAndPassword(email: usuario.email, password: usuario.senha);
-      this.usuario = resposta.user;
+
+      usuario.id = resposta.user.uid;
+
+      await usuario.salvarDados();
+
       onSucces();
     } catch (erro) {
       onFail(getErrorString(erro.code));

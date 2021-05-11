@@ -15,7 +15,7 @@ void main() async {
 
 void _testesComFirebase() async {
   //criando um novo documento
-  FirebaseFirestore.instance.collection('compilacao').add({'nome': 'nome campo'});
+  FirebaseFirestore.instance.collection('compilacao').add({'data': DateTime.now()});
   /*FirebaseFirestore.instance.collection('compilacao').doc('BBL9FFPRNnlGFM1uflqm').set({'nome': 'nome campo'});
   FirebaseFirestore.instance.collection('compilacao').doc('BBL9FFPRNnlGFM1uflqm').update({'nome': 'nome campo'});
   DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance.collection('compilacao').doc('BBL9FFPRNnlGFM1uflqm').get();
