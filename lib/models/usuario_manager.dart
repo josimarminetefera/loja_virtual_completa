@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -6,8 +7,10 @@ import 'package:loja_virtual_completa/models/usuario.dart';
 
 class UsuarioManager extends ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseFirestore _firebaseFirestoreInstance = FirebaseFirestore.instance;
 
-  User usuario;
+  //USUÁRIO QUE ESTÁ LOGADO
+  Usuario usuarioAtual;
 
   bool _carregando = false;
 
@@ -27,7 +30,9 @@ class UsuarioManager extends ChangeNotifier {
     try {
       carregando = true;
       UserCredential resposta = await _firebaseAuth.signInWithEmailAndPassword(email: usuario.email, password: usuario.senha);
-      this.usuario = resposta.user;
+
+      await _carregarUsuarioLogado(userioNoEntrar: resposta.user);
+
       await Future.delayed(Duration(seconds: 5));
       onSucces();
     } catch (erro) {
@@ -42,6 +47,7 @@ class UsuarioManager extends ChangeNotifier {
       UserCredential resposta = await _firebaseAuth.createUserWithEmailAndPassword(email: usuario.email, password: usuario.senha);
 
       usuario.id = resposta.user.uid;
+      this.usuarioAtual = usuario;
 
       await usuario.salvarDados();
 
@@ -56,12 +62,16 @@ class UsuarioManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _carregarUsuarioLogado() async {
-    final User usuarioLogado = await _firebaseAuth.currentUser;
+  //pode ser o usuário logado ou ao clicar em entrar
+  Future<void> _carregarUsuarioLogado({User userioNoEntrar}) async {
+    final User usuarioLogado = userioNoEntrar ?? await _firebaseAuth.currentUser; //_firebaseAuth.currentUser é o usuário logado anteriormente
     if (usuarioLogado != null) {
-      this.usuario = usuarioLogado;
-      print("Usuário Logado: " + this.usuario.uid);
+      final DocumentSnapshot documentSnapshot = await _firebaseFirestoreInstance.collection("usuario").doc(usuarioLogado.uid).get();
+
+      this.usuarioAtual = Usuario.documentParaUsuario(documentSnapshot);
+
+      print("Usuário Logado: " + this.usuarioAtual.nome);
+      atualizarTodosObservadores();
     }
-    atualizarTodosObservadores();
   }
 }

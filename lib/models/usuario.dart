@@ -10,6 +10,12 @@ class Usuario {
 
   Usuario({this.id, this.nome, this.email, this.senha, this.senhaConfirmar});
 
+  Usuario.documentParaUsuario(DocumentSnapshot documentSnapshot){
+    id = documentSnapshot.data()["id"] as String;
+    nome = documentSnapshot.data()["nome"] as String;
+    email = documentSnapshot.data()["email"] as String;
+  }
+
   DocumentReference get firestoreReference => FirebaseFirestore.instance.doc("usuario/$id");
 
   Future<void> salvarDados() async {
