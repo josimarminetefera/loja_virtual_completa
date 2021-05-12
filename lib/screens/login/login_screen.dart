@@ -41,7 +41,7 @@ class LoginScreen extends StatelessWidget {
             key: formKey,
             child: Consumer<UsuarioManager>(
               child: contruirEsqueciMinhaSenha(context), //isso aqui é chamado pelo childQueNaoRebilda
-              builder: (_, usuarioManager, childQueNaoRebilda) {
+              builder: (context, usuarioManager, childQueNaoRebilda) {
                 return ListView(
                   padding: const EdgeInsets.all(16),
                   shrinkWrap: true, //menos altura da tela
@@ -153,7 +153,7 @@ class LoginScreen extends StatelessWidget {
               senha: senhaController.text,
             ),
             onSucces: () {
-              //TODO: FECHAR TELA DE LOGIN
+              Navigator.of(context).pop();
             },
             onFail: (erro) {
               ScaffoldMessenger.of(context).showSnackBar(

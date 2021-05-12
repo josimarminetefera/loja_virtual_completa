@@ -122,7 +122,7 @@ class CriarContaScreen extends StatelessWidget {
       context.read<UsuarioManager>().criarConta(
             usuario: usuario,
             onSucces: () {
-              //TODO POP
+              Navigator.of(context).pop();
               debugPrint("Suceso");
             },
             onFail: (erro) {

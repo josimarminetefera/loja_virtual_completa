@@ -21,6 +21,8 @@ class UsuarioManager extends ChangeNotifier {
     atualizarTodosObservadores();
   }
 
+  bool get usuarioEstaLogado => usuarioAtual != null;
+
   UsuarioManager() {
     _carregarUsuarioLogado();
   }
@@ -71,7 +73,13 @@ class UsuarioManager extends ChangeNotifier {
       this.usuarioAtual = Usuario.documentParaUsuario(documentSnapshot);
 
       print("Usuário Logado: " + this.usuarioAtual.nome);
-      atualizarTodosObservadores();
     }
+    atualizarTodosObservadores();
+  }
+
+  void sair() {
+    _firebaseAuth.signOut();
+    this.usuarioAtual = null;
+    atualizarTodosObservadores();
   }
 }

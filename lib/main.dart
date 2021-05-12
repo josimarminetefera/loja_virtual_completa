@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:loja_virtual_completa/models/usuario_manager.dart';
 import 'package:loja_virtual_completa/screens/base/base_screen.dart';
 import 'package:loja_virtual_completa/screens/criar_conta/criar_conta_screen.dart';
+import 'package:loja_virtual_completa/screens/login/login_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -37,6 +38,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => UsuarioManager(),
+      //false = porque ele já instancie o UsuarioManager ASSIM FICA INSTANTÂNEO
+      lazy: false, // se ficar true só vai carregar isso aqui quando for ler algum lugar que usa o UsuarioManager
       child: MaterialApp(
         title: 'Loja Josimar',
         theme: ThemeData(
@@ -50,6 +53,8 @@ class MyApp extends StatelessWidget {
         initialRoute: '/base',
         onGenerateRoute: (settings) {
           switch (settings.name) {
+            case "/login":
+              return MaterialPageRoute(builder: (_) => LoginScreen());
             case "/criar_conta":
               return MaterialPageRoute(builder: (_) => CriarContaScreen());
             default:
