@@ -46,7 +46,13 @@ class LoginScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   shrinkWrap: true, //menos altura da tela
                   children: [
-                    construirCampoEmailSenha(context, usuarioManager),
+                    Column(
+                      children: [
+                        construirCampoEmail(context),
+                        const SizedBox(height: 10),
+                        construirCampoSenha(usuarioManager),
+                      ],
+                    ),
                     childQueNaoRebilda, //inserido aqui só para mostrar de exemplo  de uso de parte que não atualiza
                     construirBotaoEntrar(context, usuarioManager),
                   ],
@@ -59,45 +65,43 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget construirCampoEmailSenha(BuildContext context, UsuarioManager usuarioManager) {
-    return Column(
-      children: [
-        TextFormField(
-          controller: emailController,
-          decoration: const InputDecoration(
-            hintText: "E-mail",
-          ),
-          keyboardType: TextInputType.emailAddress,
-          autocorrect: false,
-          enabled: !context.read<UsuarioManager>().carregando,
-          validator: (valor) {
-            if (valor.isEmpty) {
-              return "Campo obrigatório";
-            } else if (!validarEmail(valor)) {
-              return "E-mail inválido";
-            }
-            return null;
-          },
-        ),
-        const SizedBox(height: 10),
-        TextFormField(
-          controller: senhaController,
-          decoration: const InputDecoration(
-            hintText: "Senha",
-          ),
-          autocorrect: false,
-          obscureText: true,
-          enabled: !usuarioManager.carregando,
-          validator: (valor) {
-            if (valor.isEmpty) {
-              return "Campo obrigatório";
-            } else if (!validarSenha(valor)) {
-              return "Senha muito curta";
-            }
-            return null;
-          },
-        ),
-      ],
+  TextFormField construirCampoEmail(BuildContext context) {
+    return TextFormField(
+      controller: emailController,
+      decoration: const InputDecoration(
+        hintText: "E-mail",
+      ),
+      keyboardType: TextInputType.emailAddress,
+      autocorrect: false,
+      enabled: !context.read<UsuarioManager>().carregando,
+      validator: (valor) {
+        if (valor.isEmpty) {
+          return "Campo obrigatório";
+        } else if (!validarEmail(valor)) {
+          return "E-mail inválido";
+        }
+        return null;
+      },
+    );
+  }
+
+  TextFormField construirCampoSenha(UsuarioManager usuarioManager) {
+    return TextFormField(
+      controller: senhaController,
+      decoration: const InputDecoration(
+        hintText: "Senha",
+      ),
+      autocorrect: false,
+      obscureText: true,
+      enabled: !usuarioManager.carregando,
+      validator: (valor) {
+        if (valor.isEmpty) {
+          return "Campo obrigatório";
+        } else if (!validarSenha(valor)) {
+          return "Senha muito curta";
+        }
+        return null;
+      },
     );
   }
 
@@ -146,8 +150,8 @@ class LoginScreen extends StatelessWidget {
 
   void acaoBotaoEntrar(BuildContext context) {
     if (formKey.currentState.validate()) {
+      //sem o Consumer context.read<UsuarioManager>() e com Consumer usuarioManager
       context.read<UsuarioManager>().entrar(
-            //sem o Consumer context.read<UsuarioManager>() e com Consumer usuarioManager
             usuario: Usuario(
               email: emailController.text,
               senha: senhaController.text,
