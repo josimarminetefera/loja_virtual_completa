@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:loja_virtual_completa/models/produto_manager.dart';
 import 'package:loja_virtual_completa/models/usuario_manager.dart';
 import 'package:loja_virtual_completa/screens/base/base_screen.dart';
 import 'package:loja_virtual_completa/screens/criar_conta/criar_conta_screen.dart';
@@ -36,10 +37,13 @@ void _testesComFirebase() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => UsuarioManager(),
-      //false = porque ele já instancie o UsuarioManager ASSIM FICA INSTANTÂNEO
-      lazy: false, // se ficar true só vai carregar isso aqui quando for ler algum lugar que usa o UsuarioManager
+    return MultiProvider(
+      providers: [
+        //false = porque ele já instancie o UsuarioManager ASSIM FICA INSTANTÂNEO
+        //lazy: false, // se ficar true só vai carregar isso aqui quando for ler algum lugar que usa o UsuarioManager
+        ChangeNotifierProvider(create: (_) => UsuarioManager(), lazy: false),
+        Provider(create: (_) => ProdutoManager(), lazy: false),
+      ],
       child: MaterialApp(
         title: 'Loja Josimar',
         theme: ThemeData(
