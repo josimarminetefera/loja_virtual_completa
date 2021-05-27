@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         //false = porque ele já instancie o UsuarioManager ASSIM FICA INSTANTÂNEO
         //lazy: false, // se ficar true só vai carregar isso aqui quando for ler algum lugar que usa o UsuarioManager
         ChangeNotifierProvider(create: (_) => UsuarioManager(), lazy: false),
-        Provider(create: (_) => ProdutoManager(), lazy: false),
+        ChangeNotifierProvider(create: (_) => ProdutoManager(), lazy: false),
       ],
       child: MaterialApp(
         title: 'Loja Josimar',
