@@ -10,6 +10,25 @@ class ProdutoManager extends ChangeNotifier {
     _carregarTodosProdutos();
   }
 
+  String _palavraBuscada = "";
+
+  String get palavraBuscada => _palavraBuscada;
+
+  set palavraBuscada(String novoValor) {
+    _palavraBuscada = novoValor;
+    atualizarTodosObservadores();
+  }
+
+  List<Produto> get listaDeProdutosFiltrada {
+    List<Produto> listaDeProdutosFiltrada = [];
+    if (_palavraBuscada.isEmpty) {
+      listaDeProdutosFiltrada.addAll(todosProdutos);
+    } else {
+      listaDeProdutosFiltrada.addAll(todosProdutos.where((produto) => produto.nome.toLowerCase().contains(_palavraBuscada.toLowerCase())));
+    }
+    return listaDeProdutosFiltrada;
+  }
+
   Future<void> _carregarTodosProdutos() async {
     //TODOS DOCUMENTOS DE PRODUTOS
     final QuerySnapshot querySnapshot = await _firebaseFirestoreInstance.collection("produtos").get();
