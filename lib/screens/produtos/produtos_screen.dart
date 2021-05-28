@@ -4,6 +4,8 @@ import 'package:loja_virtual_completa/models/produto_manager.dart';
 import 'package:loja_virtual_completa/screens/produtos/componentes/produtos_item.dart';
 import 'package:provider/provider.dart';
 
+import 'componentes/pesquisar_dialog.dart';
+
 class ProdutosScreen extends StatelessWidget {
   const ProdutosScreen({Key key}) : super(key: key);
 
@@ -14,6 +16,14 @@ class ProdutosScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Produtos"),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showDialog(context: context, builder: (_) => PesquisarDialog());
+            },
+          ),
+        ],
       ),
       body: Consumer<ProdutoManager>(
         builder: (context, produtoManager, child) {
