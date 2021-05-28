@@ -14,15 +14,45 @@ class ProdutosScreen extends StatelessWidget {
     return Scaffold(
       drawer: CustomDrawer(),
       appBar: AppBar(
-        title: const Text("Produtos"),
+        title: Consumer<ProdutoManager>(
+          builder: (context, produtoManager, child) {
+            if (produtoManager.palavraBuscada.isEmpty) {
+              return Text("Produtos");
+            } else {
+              return LayoutBuilder(
+                builder: (context, constraints) {
+                  return GestureDetector(
+                    onTap: () => _ativarPesquisarDialog(context, produtoManager),
+                    child: Container(
+                      width: constraints.biggest.width,
+                      child: Text(
+                        produtoManager.palavraBuscada,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  );
+                },
+              );
+            }
+          },
+        ),
         centerTitle: true,
         actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () async {
-              final palavraBuscada = await showDialog<String>(context: context, builder: (_) => PesquisarDialog());
-              if (palavraBuscada != null) {
-                context.read<ProdutoManager>().palavraBuscada = palavraBuscada;
+          Consumer<ProdutoManager>(
+            builder: (context, produtoManager, child) {
+              if (produtoManager.palavraBuscada.isEmpty) {
+                return IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () => _ativarPesquisarDialog(context, produtoManager),
+                );
+              } else {
+                return IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () async {
+                    //context.read<ProdutoManager>().palavraBuscada = "";
+                    produtoManager.palavraBuscada = "";
+                  },
+                );
               }
             },
           ),
@@ -43,5 +73,17 @@ class ProdutosScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void _ativarPesquisarDialog(BuildContext context, ProdutoManager produtoManager) async {
+    final palavraBuscada = await showDialog<String>(
+      context: context,
+      builder: (_) => PesquisarDialog(
+        textoInicial: produtoManager.palavraBuscada,
+      ),
+    );
+    if (palavraBuscada != null) {
+      produtoManager.palavraBuscada = palavraBuscada;
+    }
   }
 }
