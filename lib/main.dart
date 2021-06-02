@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:loja_virtual_completa/models/produto.dart';
 import 'package:loja_virtual_completa/models/produto_manager.dart';
 import 'package:loja_virtual_completa/models/usuario_manager.dart';
 import 'package:loja_virtual_completa/screens/base/base_screen.dart';
 import 'package:loja_virtual_completa/screens/criar_conta/criar_conta_screen.dart';
 import 'package:loja_virtual_completa/screens/login/login_screen.dart';
+import 'package:loja_virtual_completa/screens/produto/produto_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -56,11 +58,18 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: '/base',
         onGenerateRoute: (settings) {
+          // settings contem todos os arguments
           switch (settings.name) {
             case "/login":
               return MaterialPageRoute(builder: (_) => LoginScreen());
             case "/criar_conta":
               return MaterialPageRoute(builder: (_) => CriarContaScreen());
+            case "/produto":
+              return MaterialPageRoute(
+                builder: (_) => ProdutoScreen(
+                  produto: settings.arguments as Produto,
+                ),
+              );
             default:
               return MaterialPageRoute(builder: (_) => BaseScreen());
           }
