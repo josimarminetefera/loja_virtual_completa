@@ -8,6 +8,7 @@ class LoginScreen extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
+  //PEGAR OS DADOS DO CAMPO NA TELA
   final TextEditingController emailController = TextEditingController();
   final TextEditingController senhaController = TextEditingController();
 
@@ -39,6 +40,7 @@ class LoginScreen extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 16),
           child: Form(
             key: formKey,
+            //EXISTEM DUAS FORMAS DE USAR O CONSUMIDOR COM O context.read<UsuarioManager> OU COM O Consumer<UsuarioManager>
             child: Consumer<UsuarioManager>(
               child: contruirEsqueciMinhaSenha(context), //isso aqui é chamado pelo childQueNaoRebilda
               builder: (context, usuarioManager, childQueNaoRebilda) {

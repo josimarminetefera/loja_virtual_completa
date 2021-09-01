@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:loja_virtual_completa/helpres/firebase_erros.dart';
 import 'package:loja_virtual_completa/models/usuario.dart';
 
@@ -27,11 +26,14 @@ class UsuarioManager extends ChangeNotifier {
     _carregarUsuarioLogado();
   }
 
-  //Esta Function é um calback que é chamado dentro da função
+  //Esta Function é um calback que é chamado dentro da função LA DO LOGIN
   Future<void> entrar({Usuario usuario, Function onFail, Function onSucces}) async {
     try {
       carregando = true;
-      UserCredential resposta = await _firebaseAuth.signInWithEmailAndPassword(email: usuario.email, password: usuario.senha);
+      UserCredential resposta = await _firebaseAuth.signInWithEmailAndPassword(
+        email: usuario.email,
+        password: usuario.senha,
+      );
 
       await _carregarUsuarioLogado(userioNoEntrar: resposta.user);
 
@@ -46,7 +48,10 @@ class UsuarioManager extends ChangeNotifier {
   Future<void> criarConta({Usuario usuario, Function onFail, Function onSucces}) async {
     try {
       carregando = true;
-      UserCredential resposta = await _firebaseAuth.createUserWithEmailAndPassword(email: usuario.email, password: usuario.senha);
+      UserCredential resposta = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: usuario.email,
+        password: usuario.senha,
+      );
 
       usuario.id = resposta.user.uid;
       this.usuarioAtual = usuario;

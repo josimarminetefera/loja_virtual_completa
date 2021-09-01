@@ -21,6 +21,7 @@ class CustomDrawer extends StatelessWidget {
               ),
             ),
           ),
+          //LISTA DE OPÇÕES DO MENU LATERAL
           ListView(
             children: [
               CustomDrawerCabecalho(),

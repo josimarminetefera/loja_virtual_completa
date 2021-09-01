@@ -13,6 +13,7 @@ class CustomDrawerItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final int paginaAtual = context.watch<PaginaManager>().paginaAtual;
 
+    //OBJETO CLICAVEL DE CADA UMA DAS OPÇÕES DO MENU LATERAL
     return InkWell(
       onTap: () {
         context.read<PaginaManager>().trocarDePagina(paginaParaAbrir);

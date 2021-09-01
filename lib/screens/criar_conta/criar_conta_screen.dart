@@ -8,7 +8,7 @@ class CriarContaScreen extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  //FORMA DE NÃO USAR CONTROLLER PARA CADA UM DOS CAMPOS
+  //FORMA DE NÃO USAR TextEditingController PARA CADA UM DOS CAMPOS
   Usuario usuario = new Usuario();
 
   @override
